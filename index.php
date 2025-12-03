@@ -1,150 +1,126 @@
-<?php
-declare(strict_types=1);
-@ini_set('display_errors', '1');
-@error_reporting(E_ALL);
-@date_default_timezone_set('UTC');
-
-$phpVersion = PHP_VERSION;
-$now = date('Y-m-d H:i:s');
-?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>New Style</title>
-<?php
-// Read project preview data from environment
-$projectDescription = $_SERVER['PROJECT_DESCRIPTION'] ?? '';
-$projectImageUrl = $_SERVER['PROJECT_IMAGE_URL'] ?? '';
-?>
-<?php if ($projectDescription): ?>
-  <!-- Meta description -->
-  <meta name="description" content='<?= htmlspecialchars($projectDescription) ?>' />
-  <!-- Open Graph meta tags -->
-  <meta property="og:description" content="<?= htmlspecialchars($projectDescription) ?>" />
-  <!-- Twitter meta tags -->
-  <meta property="twitter:description" content="<?= htmlspecialchars($projectDescription) ?>" />
-<?php endif; ?>
-<?php if ($projectImageUrl): ?>
-  <!-- Open Graph image -->
-  <meta property="og:image" content="<?= htmlspecialchars($projectImageUrl) ?>" />
-  <!-- Twitter image -->
-  <meta property="twitter:image" content="<?= htmlspecialchars($projectImageUrl) ?>" />
-<?php endif; ?>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-color-start: #6a11cb;
-      --bg-color-end: #2575fc;
-      --text-color: #ffffff;
-      --card-bg-color: rgba(255, 255, 255, 0.01);
-      --card-border-color: rgba(255, 255, 255, 0.1);
-    }
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(45deg, var(--bg-color-start), var(--bg-color-end));
-      color: var(--text-color);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      text-align: center;
-      overflow: hidden;
-      position: relative;
-    }
-    body::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M-10 10L110 10M10 -10L10 110" stroke-width="1" stroke="rgba(255,255,255,0.05)"/></svg>');
-      animation: bg-pan 20s linear infinite;
-      z-index: -1;
-    }
-    @keyframes bg-pan {
-      0% { background-position: 0% 0%; }
-      100% { background-position: 100% 100%; }
-    }
-    main {
-      padding: 2rem;
-    }
-    .card {
-      background: var(--card-bg-color);
-      border: 1px solid var(--card-border-color);
-      border-radius: 16px;
-      padding: 2rem;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
-    }
-    .loader {
-      margin: 1.25rem auto 1.25rem;
-      width: 48px;
-      height: 48px;
-      border: 3px solid rgba(255, 255, 255, 0.25);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
-    .hint {
-      opacity: 0.9;
-    }
-    .sr-only {
-      position: absolute;
-      width: 1px; height: 1px;
-      padding: 0; margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap; border: 0;
-    }
-    h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      margin: 0 0 1rem;
-      letter-spacing: -1px;
-    }
-    p {
-      margin: 0.5rem 0;
-      font-size: 1.1rem;
-    }
-    code {
-      background: rgba(0,0,0,0.2);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    }
-    footer {
-      position: absolute;
-      bottom: 1rem;
-      font-size: 0.8rem;
-      opacity: 0.7;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEALIFY</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-  <main>
-    <div class="card">
-      <h1>Analyzing your requirements and generating your website…</h1>
-      <div class="loader" role="status" aria-live="polite" aria-label="Applying initial changes">
-        <span class="sr-only">Loading…</span>
-      </div>
-      <p class="hint"><?= ($_SERVER['HTTP_HOST'] ?? '') === 'appwizzy.com' ? 'AppWizzy' : 'Flatlogic' ?> AI is collecting your requirements and applying the first changes.</p>
-      <p class="hint">This page will update automatically as the plan is implemented.</p>
-      <p>Runtime: PHP <code><?= htmlspecialchars($phpVersion) ?></code> — UTC <code><?= htmlspecialchars($now) ?></code></p>
+
+    <div id="splash-screen">
+        <div class="logo">HEALIFY</div>
+        <div class="tagline">Track • Grow • Glow</div>
     </div>
-  </main>
-  <footer>
-    Page updated: <?= htmlspecialchars($now) ?> (UTC)
-  </footer>
+
+            <main id="app" class="hidden">
+                <div id="home-page">
+                    <header>
+                        <h1>Home</h1>
+                    </header>
+    
+                    <section id="dashboard">
+                        <div class="card wellness-score">
+                            <h2>Wellness Score</h2>
+                            <div class="score">85</div>
+                        </div>
+                        <div class="card steps">
+                            <i class="fas fa-walking"></i>
+                            <h3>Steps</h3>
+                            <p>8,540</p>
+                        </div>
+                        <div class="card sleep">
+                            <i class="fas fa-bed"></i>
+                            <h3>Sleep</h3>
+                            <p>7h 30m</p>
+                        </div>
+                        <div class="card water">
+                            <h3>Water Intake</h3>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 60%;"></div>
+                            </div>
+                            <p>6/10 glasses</p>
+                        </div>
+                        <div class="card mood">
+                            <i class="fas fa-smile"></i>
+                            <h3>Mood</h3>
+                            <p>Happy</p>
+                        </div>
+                        <div class="card quote">
+                            <p>"The greatest wealth is health."</p>
+                        </div>
+                        <div class="card health-tip">
+                            <h3>Health Tip</h3>
+                            <p>Stay hydrated, it improves everything.</p>
+                        </div>
+                    </section>
+    
+                    <section class="quick-add">
+                        <button class="btn"><i class="fas fa-tint"></i> Log Water</button>
+                        <button class="btn"><i class="fas fa-grin"></i> Log Mood</button>
+                        <button class="btn"><i class="fas fa-dumbbell"></i> Start Workout</button>
+                                    </section>
+                                </div>
+                    
+                                <div id="tracker-page" class="hidden">
+                                    <header>
+                                        <h1>Health Tracker</h1>
+                                    </header>
+                    
+                                    <section id="tracker-dashboard">
+                                        <div class="card">
+                                            <h3>Weekly Steps</h3>
+                                            <canvas id="steps-chart"></canvas>
+                                        </div>
+                                        <div class="card">
+                                            <i class="fas fa-tint"></i>
+                                            <h3>Water Intake</h3>
+                                            <p>6/10 glasses</p>
+                                            <button class="btn btn-small">+</button>
+                                            <button class="btn btn-small">-</button>
+                                        </div>
+                                        <div class="card">
+                                            <i class="fas fa-bed"></i>
+                                            <h3>Sleep Log</h3>
+                                            <p>7h 30m</p>
+                                            <input type="text" placeholder="Add sleep time"/>
+                                        </div>
+                                        <div class="card meal-tracker">
+                                            <h3>Meal Tracker</h3>
+                                            <ul>
+                                                <li>Breakfast: Oats</li>
+                                                <li>Lunch: Salad</li>
+                                                <li>Dinner: Chicken</li>
+                                            </ul>
+                                        </div>
+                                        <div class="card">
+                                            <h3>Calories</h3>
+                                            <p>1800 kcal</p>
+                                        </div>
+                                        <div class="card">
+                                            <i class="fas fa-heartbeat"></i>
+                                            <h3>Heart Rate</h3>
+                                            <p>72 bpm</p>
+                                            <input type="text" placeholder="Add heart rate"/>
+                                        </div>
+                                    </section>
+                                </div>
+                    
+                    
+        <nav class="bottom-nav">
+            <a href="#home" class="active"><i class="fas fa-home"></i><span>Home</span></a>
+            <a href="#tracker"><i class="fas fa-heartbeat"></i><span>Tracker</span></a>
+            <a href="#"><i class="fas fa-smile-beam"></i><span>Mood</span></a>
+            <a href="#"><i class="fas fa-dumbbell"></i><span>Workout</span></a>
+            <a href="#"><i class="fas fa-user"></i><span>Profile</span></a>
+        </nav>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="assets/js/app.js"></script>
 </body>
 </html>
